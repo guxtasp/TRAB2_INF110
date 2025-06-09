@@ -41,7 +41,7 @@ int main() {
 	cout << "Seja bem-vindo ao manipulador de imagens!\n\nDigite o nome do arquivo (Nao se esqueca da extensao .pnm): ";
 	char nomeArquivo[100];  // Variavel para armazenamento do arquivo desejado
 	cin >> nomeArquivo;  // Usuario digita o nome do arquivo
-	
+
 	//*** Abertura do arquivo ***//
 	arqentrada.open(nomeArquivo,ios::in); //Abre arquivo para leitura
 	if (!arqentrada) {
@@ -105,10 +105,10 @@ int main() {
 				imagem[i][j] = (unsigned char)valor;
 			}
 	}
-	
+
 	else if (strcmp(tipo, "P3") == 0) {
 		for(i=0;i<altura;i++)
-			for(j=0;j<largura;j++) 
+			for(j=0;j<largura;j++)
 			for(int k=0; k<3; k++){
 				arqentrada >> valor;
 				imagemColorida[i][j][k] = (unsigned char)valor;
@@ -137,8 +137,8 @@ int main() {
 	cout << endl;
 	cout << "Digite a opcao desejada: ";
 	cin >> opcao; // Usuário digita a opcao
-	
-	
+
+
 	if (opcao == 1){
 			//*** Escurece a imagem ***//
 			int fator;
@@ -148,8 +148,8 @@ int main() {
 				cout << "Valor inválido. Certifique-se o fator esteja dentro limite \n Por favor, digite um número entre 1 e 100: " << endl;
 				cin >> fator;
 			}
-			if (strcmp(tipo, "P2") == 0) {         // caso seja, tons de cinza 
-				for(i=0;i<altura;i++)
+			if (strcmp(tipo, "P2") == 0) {         // caso seja, tons de cinza
+				for(i=0;i<altura;i++)                 // ACESSA A MATRIZ
 					for(j=0;j<largura;j++){
 						valor = (int)imagem[i][j];			//pega o valor do pixel
 						valor -= fator;									//escurece o pixel
@@ -194,7 +194,7 @@ int main() {
 			}
 			else if (strcmp(tipo, "P3") == 0) {
 					for(i=0;i<altura;i++)
-						for(j=0;j<largura;j++) 
+						for(j=0;j<largura;j++)
 							for (int k=0; k < 3; k++){
 								valor = (int)imagemColorida[i][j][k];			//pega o valor do pixel
 								valor += fator;									//clarea o pixel
@@ -212,7 +212,7 @@ int main() {
 			for(i=0;i<altura;i++)
 				for(j=0;j<largura;j++) {
 					valor = (int)imagem[i][j];			//pega o valor do pixel
-					int negativo = 255 - valor;         // a variavl negativo se baseia em uma inversao simetrica (0 -> 255; 255 -> 0; 128 -> 127...)    
+					int negativo = 255 - valor;         // a variavl negativo se baseia em uma inversao simetrica (0 -> 255; 255 -> 0; 128 -> 127...)
 					valor = negativo;					// atribui o valor da variavel negativo para a valor
 					imagem[i][j] = (unsigned char)valor;	//modifica o pixel
 				}
@@ -225,14 +225,14 @@ int main() {
 				for(j=0;j<largura;j++) {
 					for(int k=0; k<3; k++){
 					valor = (int)imagemColorida[i][j][k];			//pega o valor do pixel
-					int negativo = 255 - valor;         // a variavl negativo se baseia em uma inversao simetrica (0 -> 255; 255 -> 0; 128 -> 127...)    
+					int negativo = 255 - valor;         // a variavl negativo se baseia em uma inversao simetrica (0 -> 255; 255 -> 0; 128 -> 127...)
 					valor = negativo;					// atribui o valor da variavel negativo para a valor
 					imagemColorida[i][j][k] = (unsigned char)valor;	//modifica o pixel
 				}
 			//*************************//
 			}
 		}
-	}	
+	}
 
 	else if(opcao == 4){
 			//*** espelha a imagem ***//
@@ -241,9 +241,9 @@ int main() {
 					for(j=0;j<largura;j++) {
 						auxiliar[i][j] = imagem [altura - 1 - i][j]; // atribui a ultima linha da matriz principal para a primeira desta matriz auxiliar
 					}
-					
 
-				
+
+
 				for(i=0;i<altura;i++)
 					for(j=0;j<largura;j++) {
 						imagem[i][j] = auxiliar[i][j]; // atribui as linhas da matriz auxiliar
@@ -253,13 +253,13 @@ int main() {
 
 			else if (strcmp(tipo, "P3") == 0) {
 				for(i=0;i<altura;i++)
-					for(j=0;j<largura;j++) 
+					for(j=0;j<largura;j++)
 						for(int k=0; k<3; k++){
 						auxiliarColorida[i][j][k] = imagemColorida[altura - 1 - i][j][k]; // atribui a ultima linha da matriz principal para a primeira desta matriz auxiliar
 					}
-					
 
-				
+
+
 				for(i=0;i<altura;i++)
 					for(j=0;j<largura;j++)
 						for(int k = 0; k < 3; k++){
@@ -273,16 +273,16 @@ int main() {
 			//*** aplicar filtro de prewitt na imagem ***//
 			if (strcmp(tipo, "P2") == 0) {
 
-				for(i=1;i<altura-1;i++)  // (-1 e 1) para nao acessar os pixels que ficam na borda    (TIRA LINHA 0 E A ULTIMA)  
-					for(j=1;j<largura-1;j++) { // (-1) para nao acessar os pixels que ficam na borda   (TIRA COLUNA 0 E A ULTIMA) 
+				for(i=1;i<altura-1;i++)  // (-1 e 1) para nao acessar os pixels que ficam na borda    (TIRA LINHA 0 E A ULTIMA)
+					for(j=1;j<largura-1;j++) { // (-1) para nao acessar os pixels que ficam na borda   (TIRA COLUNA 0 E A ULTIMA)
 						int somagx = 0;  // irá gerar cada for, pois é resultado de um soma "ponderada" do pixel e seus vizinhos
 						int somagy = 0;
-						somagx = 
+						somagx =
 							imagem[i-1][j-1]*1 + imagem[i-1][j]*0 + imagem[i-1][j+1]*(-1) +
 							imagem[i][j-1]*1 + imagem[i][j]*0     + imagem[i][j+1]*(-1) +   // calcula os vizinhos no gx
-							imagem[i+1][j-1]*1 + imagem[i+1][j]*0 + imagem[i+1][j+1]*(-1);  
+							imagem[i+1][j-1]*1 + imagem[i+1][j]*0 + imagem[i+1][j+1]*(-1);
 
-						somagy = 
+						somagy =
 								imagem[i-1][j-1] * 1 + imagem[i-1][j] * 1 + imagem[i-1][j+1] * 1 +
 								imagem[i  ][j-1] * 0 + imagem[i  ][j] * 0 + imagem[i  ][j+1] * 0 +              // calcula os vizinhos no gy
 								imagem[i+1][j-1] * (-1) + imagem[i+1][j] * (-1) + imagem[i+1][j+1] * (-1);
@@ -315,17 +315,17 @@ int main() {
 
 			else if (strcmp(tipo, "P3") == 0) {
 
-				for(i=1;i<altura-1;i++)  // (-1 e 1) para nao acessar os pixels que ficam na borda    (TIRA LINHA 0 E A ULTIMA)  
-					for(j=1;j<largura-1;j++) // (-1) para nao acessar os pixels que ficam na borda   (TIRA COLUNA 0 E A ULTIMA) 
-						for(int k = 0; k < 3; k++){ 
+				for(i=1;i<altura-1;i++)  // (-1 e 1) para nao acessar os pixels que ficam na borda    (TIRA LINHA 0 E A ULTIMA)
+					for(j=1;j<largura-1;j++) // (-1) para nao acessar os pixels que ficam na borda   (TIRA COLUNA 0 E A ULTIMA)
+						for(int k = 0; k < 3; k++){
 						int somagx = 0;  // irá gerar cada for, pois é resultado de um soma "ponderada" do pixel e seus vizinhos
 						int somagy = 0;
-						somagx = 
+						somagx =
 							imagemColorida[i-1][j-1][k]*1 + imagemColorida[i-1][j][k]*0 + imagemColorida[i-1][j+1][k]*(-1) +
 							imagemColorida[i][j-1][k]*1 + imagemColorida[i][j][k]*0     + imagemColorida[i][j+1][k]*(-1) +   // calcula os vizinhos no gx
-							imagemColorida[i+1][j-1][k]*1 + imagemColorida[i+1][j][k]*0 + imagemColorida[i+1][j+1][k]*(-1);  
+							imagemColorida[i+1][j-1][k]*1 + imagemColorida[i+1][j][k]*0 + imagemColorida[i+1][j+1][k]*(-1);
 
-						somagy = 
+						somagy =
 								imagemColorida[i-1][j-1][k] * 1 + imagemColorida[i-1][j][k] * 1 + imagemColorida[i-1][j+1][k] * 1 +
 								imagemColorida[i  ][j-1][k] * 0 + imagemColorida[i  ][j][k] * 0 + imagemColorida[i  ][j+1][k] * 0 +              // calcula os vizinhos no gy
 								imagemColorida[i+1][j-1][k] * (-1) + imagemColorida[i+1][j][k] * (-1) + imagemColorida[i+1][j+1][k] * (-1);
@@ -342,12 +342,12 @@ int main() {
 
 
 					// pega as bordas da original para a auxiliar -> para depois passar todos os pixel para a modificada final E NAO FICAR 0
-						for(int i = 0; i < altura; i++) 
+						for(int i = 0; i < altura; i++)
 							for(int k = 0; k < 3; k++){
 								auxiliarColorida[i][0][k] = imagemColorida[i][0][k];              // [1ª]COLUNA 0- EXCLUIDA
 								auxiliarColorida[i][largura - 1][k] = imagemColorida[i][largura - 1][k];  // ULTIMA COLUNA DA LINHA I
 						}
-						for(int j = 0; j < largura; j++) 
+						for(int j = 0; j < largura; j++)
 							for(int k = 0; k < 3; k++){
 								auxiliarColorida[0][j][k] = imagemColorida[0][j][k];               // [1ª] LINHA 0 - EXCLUIDA
 								auxiliarColorida[altura - 1][j][k] = imagemColorida[altura - 1][j][k];    // ULTIMA LINHA DA COLUNA
@@ -363,13 +363,13 @@ int main() {
 			//*** desfoque gaussiana na imagem ***//
 			if (strcmp(tipo, "P2") == 0) {
 				int somapeso = 16; // soma dos pesoas para a desfoque gaussiana
-				for(i=1;i<altura-1;i++)  // (-1 e 1) para nao acessar os pixels que ficam na borda    (TIRA LINHA 0 E A ULTIMA)  
-					for(j=1;j<largura-1;j++) { // (-1) para nao acessar os pixels que ficam na borda   (TIRA COLUNA 0 E A ULTIMA) 
+				for(i=1;i<altura-1;i++)  // (-1 e 1) para nao acessar os pixels que ficam na borda    (TIRA LINHA 0 E A ULTIMA)
+					for(j=1;j<largura-1;j++) { // (-1) para nao acessar os pixels que ficam na borda   (TIRA COLUNA 0 E A ULTIMA)
 						int soma = 0;
-						soma= 
+						soma=
 							imagem[i-1][j-1]*1+ imagem[i-1][j]*2+ imagem[i-1][j+1]*1+
 							imagem[i][j-1]*2 + imagem[i][j]*4    + imagem[i][j+1]*2 +   // soma os vizinhos
-							imagem[i+1][j-1]*1 + imagem[i+1][j]*2+ imagem[i+1][j+1]*1;  
+							imagem[i+1][j-1]*1 + imagem[i+1][j]*2+ imagem[i+1][j+1]*1;
 						int media = soma / somapeso;
 
 						if(media > 255){  // caso media > 250, atribui = 250
@@ -396,14 +396,14 @@ int main() {
 
 						else if (strcmp(tipo, "P3") == 0) {
 							int somapeso = 16; // soma dos pesoas para a desfoque gaussiana
-							for(i=1;i<altura-1;i++)  // (-1 e 1) para nao acessar os pixels que ficam na borda    (TIRA LINHA 0 E A ULTIMA)  
-								for(j=1;j<largura-1;j++) 
-									for(int k = 0; k<3; k++){ // (-1) para nao acessar os pixels que ficam na borda   (TIRA COLUNA 0 E A ULTIMA) 
+							for(i=1;i<altura-1;i++)  // (-1 e 1) para nao acessar os pixels que ficam na borda    (TIRA LINHA 0 E A ULTIMA)
+								for(j=1;j<largura-1;j++)
+									for(int k = 0; k<3; k++){ // (-1) para nao acessar os pixels que ficam na borda   (TIRA COLUNA 0 E A ULTIMA)
 									int soma = 0;
-									soma= 
+									soma=
 										imagemColorida[i-1][j-1][k]*1+ imagemColorida[i-1][j][k]*2+ imagemColorida[i-1][j+1][k]*1+
 										imagemColorida[i][j-1][k]*2 + imagemColorida[i][j][k]*4    + imagemColorida[i][j+1][k]*2 +   // soma os vizinhos
-										imagemColorida[i+1][j-1][k]*1 + imagemColorida[i+1][j][k]*2+ imagemColorida[i+1][j+1][k]*1;  
+										imagemColorida[i+1][j-1][k]*1 + imagemColorida[i+1][j][k]*2+ imagemColorida[i+1][j+1][k]*1;
 									int media = soma / somapeso;
 
 									if(media > 255){  // caso media > 250, atribui = 250
@@ -414,18 +414,18 @@ int main() {
 
 
 								// pega as bordas da original para a auxiliar -> para depois passar todos os pixel para a modificada final E NAO FICAR 0
-									for(int i = 0; i < altura; i++) 
+									for(int i = 0; i < altura; i++)
 										for(int k = 0; k<3; k++){
 										auxiliarColorida[i][0][k] = imagemColorida[i][0][k];              // [1ª]COLUNA 0- EXCLUIDA
 										auxiliarColorida[i][largura - 1][k] = imagemColorida[i][largura - 1][k];  // ULTIMA COLUNA DA LINHA I
 									}
-									for(int j = 0; j < largura; j++) 
+									for(int j = 0; j < largura; j++)
 										for(int k = 0; k<3; k++){
 											auxiliarColorida[0][j][k] = imagemColorida[0][j][k];               // [1ª] LINHA 0 - EXCLUIDA
 											auxiliarColorida[altura - 1][j][k] = imagemColorida[altura - 1][j][k];    // ULTIMA LINHA DA COLUNA
 									}
 									for(i=0;i<altura;i++)
-										for(j=0;j<largura;j++) 
+										for(j=0;j<largura;j++)
 											for(int k = 0; k<3; k++){
 											imagemColorida[i][j][k] = auxiliarColorida[i][j][k]; // atribui as linhas da matriz auxiliar
 										}
@@ -433,9 +433,9 @@ int main() {
 					}
 
 		else if(opcao == 7){
-			if (strcmp(tipo, "P3") == 0) { // verifica se a imagem é do tipo 3, ou seja, se é colorida 
+			if (strcmp(tipo, "P3") == 0) { // verifica se a imagem é do tipo 3, ou seja, se é colorida
 				// aplica a conversao da escala rgb para cinza em cada pixel
-				for(i=0;i<altura;i++) 
+				for(i=0;i<altura;i++)
 					for(j=0;j<largura;j++){
 								unsigned char red = imagemColorida[i][j][0];  // obtem os componentes do rgb do pixel atual para seguir o calculo de cinza
 								unsigned char green = imagemColorida[i][j][1];
@@ -450,7 +450,7 @@ int main() {
 									gray = 0;
 
 								imagemColorida[i][j][0] = (unsigned char) gray;  // atribui o valor cinza para cada indice respectivo do rgb
-								imagemColorida[i][j][1] = (unsigned char) gray;	// mantendo o formato p3					
+								imagemColorida[i][j][1] = (unsigned char) gray;	// mantendo o formato p3
 								imagemColorida[i][j][2] = (unsigned char) gray;
 							}
 			}
@@ -469,11 +469,11 @@ int main() {
 			int bloco;
 			cout << "Digite o tamanho do bloco para pixelizar (ex: 4): ";
 			cin >> bloco; // armazena  o tamanho do bloco, aplicando-se tanto a altura, quanto a largura, com um bloco baseado em [N X N]
-			// Valida enquanto o valor for invalido 
+			// Valida enquanto o valor for invalido
 			while(bloco <= 0 || bloco > altura || bloco >largura){
 				cout << "Tamanho invalido! Certifique-se o tamanho seja menor que a altura e a largura \n";
 				cout << "Por favor, digite um valor valido: ";
-				cin >> bloco;		
+				cin >> bloco;
 			}
 
 			if (strcmp(tipo, "P2") == 0) {
@@ -485,11 +485,11 @@ int main() {
 							int quantPixel = 0; // somador de pixels para media
 
 							// soma dos pixels
-							for(int x=i; x < i + bloco && x < altura; x++){  // ira percorer cada pixel dentro do bloco atual, evitando passar 
-							// ultrapaasr o limite da imagem, ex: vai que é uma imagem impar, e fique apenas um elemento, para nao passar do limite 
+							for(int x=i; x < i + bloco && x < altura; x++){  // ira percorer cada pixel dentro do bloco atual, evitando passar
+							// ultrapaasr o limite da imagem, ex: vai que é uma imagem impar, e fique apenas um elemento, para nao passar do limite
 								for(int y=j; y < j + bloco && y < largura; y++){
 										somaPixel+= (int) imagem[x][y]; // pega os valores de cada pixel
-										quantPixel++; // somador para media de pixel , importante para casos que o bloco nao seja N x N, ou seja, um quadrado, exemplo:2x2, 2x1 
+										quantPixel++; // somador para media de pixel , importante para casos que o bloco nao seja N x N, ou seja, um quadrado, exemplo:2x2, 2x1
 									}
 								}
 									int media = somaPixel / quantPixel;
@@ -521,8 +521,8 @@ int main() {
 										int quantPixel = 0;
 
 										// soma dos pixels
-										for(int x=i; x < i + bloco && x < altura; x++){  // ira percorer cada pixel dentro do bloco atual, evitando passar 
-										// ultrapaasr o limite da imagem, ex: vai que é uma imagem impar, e fique apenas um elemento, para nao passar do limite 
+										for(int x=i; x < i + bloco && x < altura; x++){  // ira percorer cada pixel dentro do bloco atual, evitando passar
+										// ultrapaasr o limite da imagem, ex: vai que é uma imagem impar, e fique apenas um elemento, para nao passar do limite
 											for(int y=j; y < j + bloco && y < largura; y++){
 													for(int k = 0; k<3; k++){
 															somaPixel[k]+= (int) imagemColorida[x][y][k]; // pega os valores de cada pixel
@@ -530,7 +530,7 @@ int main() {
 													quantPixel++; // somador para caso que o bloco nao seja 4x4, exemplo 2x2, 2x1
 											}
 										}
-											
+
 												int media[3];
 												for(int k=0; k<3; k++){
 													media[k] = somaPixel[k]/quantPixel;
@@ -577,7 +577,7 @@ int main() {
 	cout << "Processada com sucesso! Vamos gravar? \nDigite o nome do novo arquivo modificado (Nao se esqueca da extensao .pnm): ";
 	char nomeArquivoFinal[100];  // Variavel para armazenamento do nome do arquivo modificado
 	cin >> nomeArquivoFinal;  // Usuario digita o nome do arquivo
-	
+
 	arqsaida.open(nomeArquivoFinal,ios::out);	//Cria um arquivo para escrita
 	if (!arqsaida) {
 		cout << "Nao consegui criar "<< nomeArquivoFinal << "\n";
